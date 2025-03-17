@@ -8,3 +8,5 @@ class Contact:
             self.zip_code=zip_code
             self.phone_number=phone_number
             self.email_id=email_id
+      def __str__(self):
+            return (f"Name: {self.first_name} {self.last_name}\n Address: {self.address}, {self.city}, {self.state} - {self.zip_code}\n Phone: {self.phone_number}\n Email: {self.email_id}")
