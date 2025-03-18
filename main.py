@@ -6,7 +6,7 @@ address_book_name = input("Enter the address book name: ")
 address_book = AddressBook(address_book_name)
 
 while True:
-    print("\nOptions:\n1. Add Contact\n2. Edit Contact\n3. Show Contacts\n4. Exit")
+    print("\nOptions:\n1. Add Contact\n2. Edit Contact\n3. Delete Contact\n4. Show Contacts\n5. Exit")
     choice = input("Enter your choice: ")
 
     if choice == "1":
@@ -41,12 +41,16 @@ while True:
 
             print("Contact updated successfully!")
         else:
-            print(f"Contact with name {name_to_edit} not found.")
+            print(f"Contact with name '{name_to_edit}' not found.")
 
     elif choice == "3":
-        address_book.getContacts()
+        name_to_delete = input("Enter the first or last name of the contact to delete: ")
+        address_book.deleteContact(name_to_delete)
 
     elif choice == "4":
+        address_book.getContacts()
+
+    elif choice == "5":
         print("Exiting the Address Book. Goodbye!")
         break
 

@@ -1,7 +1,7 @@
 class AddressBook:
     def __init__(self, address_book_name):
         self.address_book_name = address_book_name
-        self.contacts = []
+        self.contacts = []  # Using a list instead of a dictionary
 
     def addContact(self, contact_obj):
         self.contacts.append(contact_obj)
@@ -17,4 +17,12 @@ class AddressBook:
         for contact in self.contacts:
             if contact.first_name.lower() == name.lower() or contact.last_name.lower() == name.lower():
                 return contact
-        return None
+        return None  # If no contact is found
+
+    def deleteContact(self, name):
+        contact_to_delete = self.findContact(name)
+        if contact_to_delete:
+            self.contacts.remove(contact_to_delete)
+            print(f"Contact '{name}' deleted successfully.")
+        else:
+            print(f"Contact with name '{name}' not found.")
