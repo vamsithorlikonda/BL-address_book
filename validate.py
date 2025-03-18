@@ -27,13 +27,13 @@ def validate_input(input_type):
             }
 
             while True:
-                user_input = func(prompt)  # Call the actual input function
+                user_input = func(prompt)
                 if re.match(patterns.get(input_type, ""), user_input):
                     return user_input
                 print(error_messages.get(input_type, "Invalid input!"))
         return wrapper
     return decorator
 
-@validate_input("dynamic")
+@validate_input("Default")
 def get_valid_input(prompt):
     return input(prompt)

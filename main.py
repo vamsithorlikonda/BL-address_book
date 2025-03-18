@@ -6,29 +6,49 @@ address_book_name = input("Enter the address book name: ")
 address_book = AddressBook(address_book_name)
 
 while True:
-    try:
-        n = int(input("Enter the number of contacts for the address book: "))
+    print("\nOptions:\n1. Add Contact\n2. Edit Contact\n3. Show Contacts\n4. Exit")
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        first_name = get_valid_input("Enter the first name: ", "name")  
+        last_name = get_valid_input("Enter the last name: ", "name")  
+        address = get_valid_input("Enter the address: ", "address")  
+        city = get_valid_input("Enter the city: ", "city_state")  
+        state = get_valid_input("Enter the state: ", "city_state")  
+        zip_code = get_valid_input("Enter the zip code: ", "zip")  
+        phone_number = get_valid_input("Enter the phone number: ", "phone")  
+        email_id = get_valid_input("Enter the email ID: ", "email")  
+
+        contact = Contact(first_name, last_name, address, city, state, zip_code, phone_number, email_id)
+        address_book.addContact(contact)
+        print("Contact added successfully!")
+
+    elif choice == "2":
+        name_to_edit = input("Enter the first or last name of the contact to edit: ")
+        contact = address_book.findContact(name_to_edit)
+
+        if contact:
+            print(f"Editing contact: {contact}")
+
+            contact.first_name = get_valid_input("Enter new first name: ", "name")
+            contact.last_name = get_valid_input("Enter new last name: ", "name")
+            contact.address = get_valid_input("Enter new address: ", "address")
+            contact.city = get_valid_input("Enter new city: ", "city_state")
+            contact.state = get_valid_input("Enter new state: ", "city_state")
+            contact.zip_code = get_valid_input("Enter new zip code: ", "zip")
+            contact.phone_number = get_valid_input("Enter new phone number: ", "phone")
+            contact.email_id = get_valid_input("Enter new email ID: ", "email")
+
+            print("Contact updated successfully!")
+        else:
+            print(f"Contact with name {name_to_edit} not found.")
+
+    elif choice == "3":
+        address_book.getContacts()
+
+    elif choice == "4":
+        print("Exiting the Address Book. Goodbye!")
         break
-    except ValueError:
-        print("Invalid input! Please enter a valid number.")
-i=1
-while n:
-    print(f"Enter the values for the contact {i}:")
 
-    first_name = get_valid_input("Enter the first name: ", "name")  # Name validation
-    last_name = get_valid_input("Enter the last name: ", "name")  # Name validation
-    address = get_valid_input("Enter the address: ", "address")  # Address validation
-    city = get_valid_input("Enter the city: ", "city_state")  # City validation
-    state = get_valid_input("Enter the state: ", "city_state")  # State validation
-    zip_code = get_valid_input("Enter the zip code: ", "zip")  # Zip validation
-    phone_number = get_valid_input("Enter the phone number: ", "phone")  # Phone validation
-    email_id = get_valid_input("Enter the email ID: ", "email")  # Email validation
-
-    contact = Contact(
-        first_name, last_name, address, city, state, zip_code, phone_number, email_id
-    )
-    address_book.addContact(contact)
-    n -= 1  # Decrement n
-    i+=1
-
-print(address_book.getContacts())
+    else:
+        print("Invalid choice! Please enter a valid option.")
