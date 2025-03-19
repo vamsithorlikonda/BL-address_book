@@ -1,58 +1,35 @@
-from address_book import AddressBook
-from contact import Contact
-from validate import get_valid_input
+from address_book_main import AddressBookMain
 
-address_book_name = input("Enter the address book name: ")
-address_book = AddressBook(address_book_name)
+if __name__ == "__main__":
+    address_book_main = AddressBookMain()
 
-while True:
-    print("\nOptions:\n1. Add Contact\n2. Edit Contact\n3. Delete Contact\n4. Show Contacts\n5. Exit")
-    choice = input("Enter your choice: ")
+    while True:
+        print("\nMain Menu:")
+        print("1. Create New Address Book")
+        print("2. Select Address Book")
+        print("3. Show All Address Books")
+        print("4. Delete Address Book")
+        print("5. Exit")
 
-    if choice == "1":
-        first_name = get_valid_input("Enter the first name: ", "name")  
-        last_name = get_valid_input("Enter the last name: ", "name")  
-        address = get_valid_input("Enter the address: ", "address")  
-        city = get_valid_input("Enter the city: ", "city_state")  
-        state = get_valid_input("Enter the state: ", "city_state")  
-        zip_code = get_valid_input("Enter the zip code: ", "zip")  
-        phone_number = get_valid_input("Enter the phone number: ", "phone")  
-        email_id = get_valid_input("Enter the email ID: ", "email")  
+        choice = input("Enter your choice: ")
 
-        contact = Contact(first_name, last_name, address, city, state, zip_code, phone_number, email_id)
-        address_book.addContact(contact)
-        print("Contact added successfully!")
+        if choice == "1":
+            address_book_main.createAddressBook()
 
-    elif choice == "2":
-        name_to_edit = input("Enter the first or last name of the contact to edit: ")
-        contact = address_book.findContact(name_to_edit)
+        elif choice == "2":
+            selected_book = address_book_main.selectAddressBook()
+            if selected_book:
+                address_book_main.manageAddressBook(selected_book)
 
-        if contact:
-            print(f"Editing contact: {contact}")
+        elif choice == "3":
+            address_book_main.showAllAddressBooks()
 
-            contact.first_name = get_valid_input("Enter new first name: ", "name")
-            contact.last_name = get_valid_input("Enter new last name: ", "name")
-            contact.address = get_valid_input("Enter new address: ", "address")
-            contact.city = get_valid_input("Enter new city: ", "city_state")
-            contact.state = get_valid_input("Enter new state: ", "city_state")
-            contact.zip_code = get_valid_input("Enter new zip code: ", "zip")
-            contact.phone_number = get_valid_input("Enter new phone number: ", "phone")
-            contact.email_id = get_valid_input("Enter new email ID: ", "email")
+        elif choice == "4":
+            address_book_main.deleteAddressBook()
 
-            print("Contact updated successfully!")
+        elif choice == "5":
+            print("Exiting Address Book System. Goodbye!")
+            break
+
         else:
-            print(f"Contact with name '{name_to_edit}' not found.")
-
-    elif choice == "3":
-        name_to_delete = input("Enter the first or last name of the contact to delete: ")
-        address_book.deleteContact(name_to_delete)
-
-    elif choice == "4":
-        address_book.getContacts()
-
-    elif choice == "5":
-        print("Exiting the Address Book. Goodbye!")
-        break
-
-    else:
-        print("Invalid choice! Please enter a valid option.")
+            print("Invalid choice! Please enter a valid option.")
