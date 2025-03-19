@@ -4,6 +4,12 @@ class AddressBook:
         self.contacts = []
 
     def addContact(self, contact_obj):
+        """ Adds a contact if it doesn't already exist """
+        for contact in self.contacts:
+            if (contact.first_name.lower() == contact_obj.first_name.lower() and 
+               contact.last_name.lower() == contact_obj.last_name.lower()):
+                print(f"Error: Contact '{contact_obj.first_name} {contact_obj.last_name}' already exists!")
+                return
         self.contacts.append(contact_obj)
         print(f"Contact {contact_obj.first_name} {contact_obj.last_name} added successfully!")
 
@@ -21,7 +27,7 @@ class AddressBook:
         for contact in self.contacts:
             if contact.first_name.lower() == name.lower() or contact.last_name.lower() == name.lower():
                 return contact
-        return None 
+        return None  # If no contact is found
 
     def editContact(self, name, updated_contact):
         """ Edits an existing contact """
