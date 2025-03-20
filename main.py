@@ -61,11 +61,33 @@ if __name__ == "__main__":
 
                     elif sub_choice == "4":  # Show Contacts
                         selected_book.getContacts()
+
                     elif sub_choice == "5":  # Sort Contacts
-                        selected_book.sortContacts()
+                        print("\nSort Contacts By:")
+                        print("1. Name")
+                        print("2. City")
+                        print("3. State")
+                        print("4. Zip Code")
+
+                        sort_choice = input("Enter your choice: ").strip()
+
+                        if sort_choice == "1":
+                            selected_book.sortContacts("name")
+                        elif sort_choice == "2":
+                            selected_book.sortContacts("city")
+                        elif sort_choice == "3":
+                            selected_book.sortContacts("state")
+                        elif sort_choice == "4":
+                            selected_book.sortContacts("zip")
+                        else:
+                            print("Invalid choice! Sorting by Name as default.")
+                            selected_book.sortContacts("name")
+
                         selected_book.getContacts()
+
                     elif sub_choice == "6":  # Back to Main Menu
                         break
+
                     else:
                         print("Invalid choice! Please enter a valid option.")
 
@@ -87,8 +109,9 @@ if __name__ == "__main__":
                 print("Error: Please enter a valid location name.")
             else:
                 address_book_search.searchPersonByCityOrState(location, search_type)
+
         elif choice == "6":
-            print("Exiting Address Book System. Goodbye.")
+            print("Exiting Address Book System.")
             break
         
         else:
