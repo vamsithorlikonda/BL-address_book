@@ -27,13 +27,13 @@ class AddressBook:
         for contact in self.contacts:
             if contact.first_name.lower() == name.lower() or contact.last_name.lower() == name.lower():
                 return contact
-        return None  # If no contact is found
+        return None
 
     def editContact(self, name, updated_contact):
         """ Edits an existing contact """
         for index, contact in enumerate(self.contacts):
             if contact.first_name.lower() == name.lower() or contact.last_name.lower() == name.lower():
-                self.contacts[index] = updated_contact  # Replace old contact with new details
+                self.contacts[index] = updated_contact
                 print(f"Contact '{name}' updated successfully!")
                 return
         print(f"Contact with name '{name}' not found.")
