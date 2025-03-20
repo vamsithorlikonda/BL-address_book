@@ -66,13 +66,15 @@ class AddressBookSearch(AddressBookMain):
 
                 if key not in found_contacts:
                     found_contacts[key] = []
-                found_contacts[key].append((book_name, contact))  # Store the full contact object
+                found_contacts[key].append((book_name, contact))
 
-        # Display the results
+        # Display results with count
         if location.lower() in found_contacts:
-            print(f"\nPeople found in {location}:")
+            contact_count = len(found_contacts[location.lower()])
+            print(f"\nPeople found in {location} ({contact_count} contact(s)):")
+            
             for book_name, contact in found_contacts[location.lower()]:
                 print(f"\nAddress Book: {book_name}")
-                print(contact)  # Contact object will call its __str__() method
+                print(contact)
         else:
             print(f"No contacts found in '{location}'.")
