@@ -12,6 +12,10 @@ class AddressBook:
                 return
         self.contacts.append(contact_obj)
         print(f"Contact {contact_obj.first_name} {contact_obj.last_name} added successfully!")
+    def sortContacts(self):
+        """ Sorts contacts alphabetically by first name, then by last name """
+        self.contacts = sorted(self.contacts, key=lambda contact: (contact.first_name.lower(), contact.last_name.lower()))
+        print("\nContacts sorted alphabetically by name.")
 
     def getContacts(self):
         """ Displays all contacts in the Address Book """

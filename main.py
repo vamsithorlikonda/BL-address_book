@@ -28,7 +28,8 @@ if __name__ == "__main__":
                     print("2. Edit Contact")
                     print("3. Delete Contact")
                     print("4. Show Contacts")
-                    print("5. Back to Main Menu")
+                    print("5. Sort Contacts")
+                    print("6. Back to Main Menu")
 
                     sub_choice = input("Enter your choice: ").strip()
 
@@ -60,10 +61,11 @@ if __name__ == "__main__":
 
                     elif sub_choice == "4":  # Show Contacts
                         selected_book.getContacts()
-
-                    elif sub_choice == "5":  # Back to Main Menu
+                    elif sub_choice == "5":  # Sort Contacts
+                        selected_book.sortContacts()
+                        selected_book.getContacts()
+                    elif sub_choice == "6":  # Back to Main Menu
                         break
-
                     else:
                         print("Invalid choice! Please enter a valid option.")
 
@@ -88,5 +90,6 @@ if __name__ == "__main__":
         elif choice == "6":
             print("Exiting Address Book System. Goodbye.")
             break
+        
         else:
             print("Invalid choice! Please enter a valid option.")
