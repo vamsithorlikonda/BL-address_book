@@ -1,10 +1,9 @@
-from address_book_main import AddressBookMain
+from address_book_main import AddressBookSearch
 from validate import get_valid_input
 from contact import Contact
 
 if __name__ == "__main__":
-    address_book_main = AddressBookMain()
-
+    address_book_search = AddressBookSearch()
     while True:
         print("\nMain Menu:")
         print("1. Create New Address Book")
@@ -17,10 +16,10 @@ if __name__ == "__main__":
         choice = input("Enter your choice: ").strip()
 
         if choice == "1":
-            address_book_main.createAddressBook()
+            address_book_search.createAddressBook()
 
         elif choice == "2":
-            selected_book = address_book_main.selectAddressBook()
+            selected_book = address_book_search.selectAddressBook()
             if selected_book:
                 while True:
                     print(f"\nManaging Address Book: {selected_book.address_book_name}")
@@ -32,7 +31,7 @@ if __name__ == "__main__":
 
                     sub_choice = input("Enter your choice: ").strip()
 
-                    if sub_choice == "1":
+                    if sub_choice == "1":  # Add Contact
                         while True:
                             first_name = get_valid_input("Enter the first name: ", "name")  
                             last_name = get_valid_input("Enter the last name: ", "name")  
@@ -52,21 +51,7 @@ if __name__ == "__main__":
 
                     elif sub_choice == "2":  # Edit Contact
                         name_to_edit = input("Enter the first or last name of the contact to edit: ").strip()
-                        contact = selected_book.findContact(name_to_edit)
-
-                        if contact:
-                            print(f"Editing contact: {contact}")
-                            contact.first_name = get_valid_input("Enter new first name: ", "name")
-                            contact.last_name = get_valid_input("Enter new last name: ", "name")
-                            contact.address = get_valid_input("Enter new address: ", "address")
-                            contact.city = get_valid_input("Enter new city: ", "city_state")
-                            contact.state = get_valid_input("Enter new state: ", "city_state")
-                            contact.zip_code = get_valid_input("Enter new zip code: ", "zip")
-                            contact.phone_number = get_valid_input("Enter new phone number: ", "phone")
-                            contact.email_id = get_valid_input("Enter new email ID: ", "email")
-                            print("Contact updated successfully!")
-                        else:
-                            print(f"Error: Contact with name '{name_to_edit}' not found.")
+                        selected_book.editContact(name_to_edit)
 
                     elif sub_choice == "3":  # Delete Contact
                         name_to_delete = input("Enter the first or last name of the contact to delete: ").strip()
@@ -82,24 +67,26 @@ if __name__ == "__main__":
                         print("Invalid choice! Please enter a valid option.")
 
         elif choice == "3":
-            address_book_main.showAllAddressBooks()
+            address_book_search.showAllAddressBooks()
 
         elif choice == "4":
-            address_book_main.deleteAddressBook()
+            address_book_search.deleteAddressBook()
 
         elif choice == "5":  # Search Person by City/State
             while True:
                 search_type = input("Search by (city/state): ").strip().lower()
                 if search_type in ["city", "state"]:
-                    break
-                else:
-                    print("Error: Invalid choice! Please enter 'city' or 'state'.")
+                    break  
+                print("Error: Invalid choice! Please enter 'city' or 'state'.")
 
             location = input(f"Enter the {search_type} name: ").strip()
-            address_book_main.searchPersonByCityOrState(location, search_type)
+            if not location:  
+                print("Error: Please enter a valid location name.")
+            else:
+                address_book_search.searchPersonByCityOrState(location, search_type)
 
         elif choice == "6":
-            print("Exiting Address Book System. Goodbye!")
+            print("Exiting Address Book System. Goodbye.")
             break
 
         else:
