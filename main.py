@@ -12,7 +12,6 @@ if __name__ == "__main__":
         print("4. Delete Address Book")
         print("5. Search Person by City/State")
         print("6. Exit")
-
         choice = input("Enter your choice: ").strip()
 
         if choice == "1":

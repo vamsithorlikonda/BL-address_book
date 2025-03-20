@@ -39,7 +39,7 @@ class AddressBookMain:
         selected_name = input("Enter the name of the address book to delete: ").strip()
 
         if selected_name in self.address_books:
-            del self.address_books[selected_name]  # Remove the address book from the dictionary
+            del self.address_books[selected_name]
             print(f"Address book '{selected_name}' deleted successfully.")
         else:
             print(f"Error: Address book '{selected_name}' not found.")
@@ -58,18 +58,21 @@ class AddressBookSearch(AddressBookMain):
 
     def searchPersonByCityOrState(self, location, search_type):
         """ Search for persons by city or state across all Address Books """
-        found_contacts = []
+        found_contacts = {}  # Dictionary {city/state: [contact objects]}
         
         for book_name, address_book in self.address_books.items():
             for contact in address_book.contacts:
-                if (search_type == "city" and contact.city.lower() == location.lower()) or \
-                   (search_type == "state" and contact.state.lower() == location.lower()):
-                    found_contacts.append((book_name, contact))
+                key = contact.city.lower() if search_type == "city" else contact.state.lower()
 
-        if found_contacts:
+                if key not in found_contacts:
+                    found_contacts[key] = []
+                found_contacts[key].append((book_name, contact))  # Store the full contact object
+
+        # Display the results
+        if location.lower() in found_contacts:
             print(f"\nPeople found in {location}:")
-            for book_name, contact in found_contacts:
+            for book_name, contact in found_contacts[location.lower()]:
                 print(f"\nAddress Book: {book_name}")
-                print(contact)
+                print(contact)  # Contact object will call its __str__() method
         else:
             print(f"No contacts found in '{location}'.")
