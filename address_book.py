@@ -1,40 +1,44 @@
 import os
+import csv
 from contact import Contact
 
 class AddressBook:
     def __init__(self, address_book_name):
         self.address_book_name = address_book_name
         self.contacts = []
-        self.file_name = f"{self.address_book_name}.txt"
-        self.read_from_file()
+        self.file_name = f"{self.address_book_name}.csv"
+        self.read_from_csv()
 
     def addContact(self, contact_obj):
-        """ Adds a contact and writes it to a file """
+        """ Adds a contact and writes it to the CSV file """
         for contact in self.contacts:
             if (contact.first_name.lower() == contact_obj.first_name.lower() and 
                contact.last_name.lower() == contact_obj.last_name.lower()):
-                print(f"Error: Contact '{contact_obj.first_name} {contact_obj.last_name}' already exists!")
+                print(f"Contact '{contact_obj.first_name} {contact_obj.last_name}' already exists!")
                 return
 
         self.contacts.append(contact_obj)
-        self.write_to_file()
+        self.write_to_csv()
         print(f"Contact {contact_obj.first_name} {contact_obj.last_name} added successfully!")
 
-    def write_to_file(self):
-        """ Writes all contacts to a file """
-        with open(self.file_name, "w") as file:
+    def write_to_csv(self):
+        """ Writes all contacts to a CSV file """
+        with open(self.file_name, mode="w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(["First Name", "Last Name", "Address", "City", "State", "Zip Code", "Phone Number", "Email ID"])  # Header
             for contact in self.contacts:
-                file.write(f"{contact.first_name},{contact.last_name},{contact.address},{contact.city},"
-                           f"{contact.state},{contact.zip_code},{contact.phone_number},{contact.email_id}\n")
+                writer.writerow([contact.first_name, contact.last_name, contact.address, contact.city,
+                                 contact.state, contact.zip_code, contact.phone_number, contact.email_id])
 
-    def read_from_file(self):
-        """ Reads contacts from a file and loads them into the Address Book """
+    def read_from_csv(self):
+        """ Reads contacts from a CSV file and loads them into the Address Book """
         if os.path.exists(self.file_name):
-            with open(self.file_name, "r") as file:
-                for line in file:
-                    data = line.strip().split(",")
-                    if len(data) == 8:
-                        first_name, last_name, address, city, state, zip_code, phone_number, email_id = data
+            with open(self.file_name, mode="r") as file:
+                reader = csv.reader(file)
+                next(reader, None)
+                for row in reader:
+                    if len(row) == 8:
+                        first_name, last_name, address, city, state, zip_code, phone_number, email_id = row
                         contact = Contact(first_name, last_name, address, city, state, zip_code, phone_number, email_id)
                         self.contacts.append(contact)
 
@@ -52,7 +56,7 @@ class AddressBook:
         elif sort_by == "zip":
             self.contacts = sorted(self.contacts, key=lambda contact: contact.zip_code)
 
-        self.write_to_file()  # Save sorted contacts to file
+        self.write_to_csv()  # Save sorted contacts to CSV file
 
     def getContacts(self):
         """ Displays all contacts in the Address Book """
@@ -71,21 +75,21 @@ class AddressBook:
         return None
 
     def editContact(self, name, updated_contact):
-        """ Edits an existing contact and updates the file """
+        """ Edits an existing contact and updates the CSV file """
         for index, contact in enumerate(self.contacts):
             if contact.first_name.lower() == name.lower() or contact.last_name.lower() == name.lower():
                 self.contacts[index] = updated_contact
-                self.write_to_file()
+                self.write_to_csv()
                 print(f"Contact '{name}' updated successfully!")
                 return
         print(f"Contact with name '{name}' not found.")
 
     def deleteContact(self, name):
-        """ Deletes a contact by first or last name and updates the file """
+        """ Deletes a contact by first or last name and updates the CSV file """
         contact_to_delete = self.findContact(name)
         if contact_to_delete:
             self.contacts.remove(contact_to_delete)
-            self.write_to_file()
+            self.write_to_csv()
             print(f"Contact '{name}' deleted successfully!")
         else:
             print(f"Contact with name '{name}' not found.")
