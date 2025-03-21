@@ -1,3 +1,0 @@
-Vamsi,Krishna,saikrishna villas,chennai,tn,123456,1234567890,vamsi@gmail.com
-sathvik,ligamseti,saikrishna villas,chennai,tn,603203,1234567899,sathvik@gmail.com
-Pavan,kummar,saikrishna,chennai,tn,125476,9876543211,pavan@gmail.com
